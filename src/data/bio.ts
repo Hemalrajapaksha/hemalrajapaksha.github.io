@@ -16,7 +16,6 @@ export const bio = {
   about: [
     "I'm a self-motivated software professional from Sri Lanka who enjoys a challenge and working with new technologies. I'm a quick learner with an analytical mind, and I value good communication, organization and leadership.",
     "I spent five years at Infor building enterprise applications with Java, Spring Boot, Angular and AWS, growing from Software Engineer to Principal Software Engineer and leading small teams along the way. Today I work in DevSecOps at the Central Provident Fund (CPF) Board in Singapore, building Jenkins pipelines and keeping deployments smooth for application teams.",
-    "Outside work, I've volunteered with Fit2School, helping A/L and O/L students with IT topics and new technologies.",
   ],
 
   experience: [
@@ -114,22 +113,11 @@ export const bio = {
       degree: "BSc (Hons) in Information Technology",
       school: "University of Moratuwa",
       period: "2013 — 2017",
-      details: "Second Class (Upper Division), GPA 3.32 · Vice President, IT Faculty Union (2015)",
     },
     {
       degree: "G.C.E. Advanced Level — Physical Science Stream",
       school: "St. Anne's College, Kurunegala",
       period: "2008 — 2011",
-      details: "Committee member, School Science Society",
-    },
-  ],
-
-  volunteering: [
-    {
-      role: "Web Developer / Web Designer",
-      organization: "Fit2School — University of Moratuwa",
-      period: "Jan 2015 — Present",
-      description: "Helping A/L and O/L students learn about new technologies and work through IT syllabus problems.",
     },
   ],
 

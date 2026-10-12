@@ -164,29 +164,8 @@ const year = new Date().getFullYear();
               <div>
                 <h3 class="font-semibold text-slate-900 dark:text-white">{edu.degree}</h3>
                 <p class="text-slate-500 dark:text-slate-400">{edu.school}</p>
-                {edu.details && <p class="mt-1 text-sm">{edu.details}</p>}
               </div>
               <span class="text-sm text-slate-500 dark:text-slate-400">{edu.period}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <!-- Volunteering -->
-    <section class="reveal mt-16">
-      <h2 class="section-title">Volunteering</h2>
-      <ul class="mt-4 space-y-4">
-        {
-          bio.volunteering.map((v) => (
-            <li>
-              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 class="font-semibold text-slate-900 dark:text-white">
-                  {v.role} <span class="font-normal text-slate-500 dark:text-slate-400">· {v.organization}</span>
-                </h3>
-                <span class="text-sm text-slate-500 dark:text-slate-400">{v.period}</span>
-              </div>
-              <p class="mt-2 leading-relaxed">{v.description}</p>
             </li>
           ))
         }
