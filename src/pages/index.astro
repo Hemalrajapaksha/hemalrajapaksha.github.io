@@ -1,0 +1,244 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { bio } from "../data/bio";
+
+const initials = bio.name
+  .split(" ")
+  .map((part) => part[0])
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
+
+const year = new Date().getFullYear();
+---
+
+<Layout title={`${bio.name} — ${bio.title}`} description={bio.summary}>
+  <!-- Scroll progress -->
+  <div class="progress fixed inset-x-0 top-0 z-50 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500"></div>
+
+  <!-- Animated background glow -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div class="blob -top-32 -left-32 size-96 bg-indigo-400 dark:bg-indigo-600"></div>
+    <div class="blob top-1/3 -right-40 size-[28rem] bg-violet-300 dark:bg-violet-700" style="animation-delay: -6s"></div>
+    <div class="blob -bottom-40 left-1/4 size-96 bg-pink-200 dark:bg-pink-800" style="animation-delay: -12s"></div>
+  </div>
+
+  <main class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+    <!-- Header -->
+    <header class="flex flex-col items-center text-center sm:flex-row sm:items-center sm:gap-8 sm:text-left">
+      <div class="fade-up relative size-36 shrink-0">
+        <div class="avatar-ring absolute inset-0 rounded-full"></div>
+        {
+          bio.avatar ? (
+            <img
+              src={bio.avatar}
+              alt={bio.name}
+              class="absolute inset-1 size-34 rounded-full border-4 border-slate-50 object-cover dark:border-slate-950"
+            />
+          ) : (
+            <div class="absolute inset-1 flex items-center justify-center rounded-full border-4 border-slate-50 bg-gradient-to-br from-indigo-500 to-violet-600 text-4xl font-bold text-white dark:border-slate-950">
+              {initials}
+            </div>
+          )
+        }
+      </div>
+      <div class="mt-6 sm:mt-0">
+        <h1
+          class="fade-up shimmer text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl dark:text-white"
+          style="--delay: 100ms"
+        >
+          {bio.name}
+        </h1>
+        <p class="fade-up mt-2 text-lg font-medium text-indigo-600 dark:text-indigo-400" style="--delay: 200ms">
+          {bio.title}
+        </p>
+        <p class="fade-up mt-1 text-sm text-slate-500 dark:text-slate-400" style="--delay: 300ms">📍 {bio.location}</p>
+        <div class="fade-up mt-4 flex flex-wrap justify-center gap-2 sm:justify-start" style="--delay: 400ms">
+          {
+            bio.socials.map((s) => (
+              <a
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-full border border-slate-200 bg-white/70 px-4 py-1.5 text-sm font-medium text-slate-700 backdrop-blur transition hover:-translate-y-0.5 hover:border-indigo-300 hover:text-indigo-600 hover:shadow-md dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
+              >
+                {s.label}
+              </a>
+            ))
+          }
+          {
+            bio.email && (
+              <a
+                href={`mailto:${bio.email}`}
+                class="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white shadow-indigo-500/40 transition hover:-translate-y-0.5 hover:bg-indigo-500 hover:shadow-lg"
+              >
+                Email me
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    <p class="fade-up mt-12 text-lg leading-relaxed text-slate-600 dark:text-slate-300" style="--delay: 500ms">
+      {bio.summary}
+    </p>
+
+    <!-- About -->
+    <section class="reveal mt-16">
+      <h2 class="section-title">About</h2>
+      <div class="mt-4 space-y-4 leading-relaxed">
+        {bio.about.map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="mt-16">
+      <h2 class="section-title reveal">Experience</h2>
+      <ol class="mt-6 space-y-4 border-l border-slate-200 pl-6 dark:border-slate-800">
+        {
+          bio.experience.map((job, i) => (
+            <li class="reveal group relative -ml-3 rounded-xl p-3 transition-colors hover:bg-white/70 hover:shadow-sm dark:hover:bg-slate-900/60">
+              <span class="absolute top-[1.15rem] -left-[1.2rem] flex size-3">
+                {i === 0 && <span class="absolute inline-flex size-full animate-ping rounded-full bg-indigo-400 opacity-75" />}
+                <span class="relative inline-flex size-3 rounded-full border-2 border-slate-50 bg-indigo-500 transition-transform group-hover:scale-125 dark:border-slate-950" />
+              </span>
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 class="font-semibold text-slate-900 dark:text-white">
+                  {job.role} <span class="font-normal text-slate-500 dark:text-slate-400">· {job.company}</span>
+                </h3>
+                <span class="text-sm text-slate-500 dark:text-slate-400">{job.period}</span>
+              </div>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{job.location}</p>
+              {job.description && <p class="mt-2 leading-relaxed">{job.description}</p>}
+              {
+                job.highlights.length > 0 && (
+                  <ul class="mt-2 list-disc space-y-1 pl-5 leading-relaxed marker:text-slate-400">
+                    {job.highlights.map((h) => (
+                      <li>{h}</li>
+                    ))}
+                  </ul>
+                )
+              }
+              {
+                job.tech.length > 0 && (
+                  <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">{job.tech.join(" · ")}</p>
+                )
+              }
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- Skills -->
+    <section class="reveal mt-16">
+      <h2 class="section-title">Skills</h2>
+      <dl class="mt-4 space-y-4">
+        {
+          bio.skills.map((group) => (
+            <div>
+              <dt class="text-sm font-semibold text-slate-900 dark:text-white">{group.category}</dt>
+              <dd class="mt-2">
+                <ul class="flex flex-wrap gap-2">
+                  {group.items.map((skill) => (
+                    <li class="cursor-default rounded-md bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700 transition hover:-translate-y-0.5 hover:bg-indigo-600 hover:text-white hover:shadow-md dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500 dark:hover:text-white">
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <!-- Education -->
+    <section class="reveal mt-16">
+      <h2 class="section-title">Education</h2>
+      <ul class="mt-4 space-y-4">
+        {
+          bio.education.map((edu) => (
+            <li class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+              <div>
+                <h3 class="font-semibold text-slate-900 dark:text-white">{edu.degree}</h3>
+                <p class="text-slate-500 dark:text-slate-400">{edu.school}</p>
+                {edu.details && <p class="mt-1 text-sm">{edu.details}</p>}
+              </div>
+              <span class="text-sm text-slate-500 dark:text-slate-400">{edu.period}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Volunteering -->
+    <section class="reveal mt-16">
+      <h2 class="section-title">Volunteering</h2>
+      <ul class="mt-4 space-y-4">
+        {
+          bio.volunteering.map((v) => (
+            <li>
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 class="font-semibold text-slate-900 dark:text-white">
+                  {v.role} <span class="font-normal text-slate-500 dark:text-slate-400">· {v.organization}</span>
+                </h3>
+                <span class="text-sm text-slate-500 dark:text-slate-400">{v.period}</span>
+              </div>
+              <p class="mt-2 leading-relaxed">{v.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Languages -->
+    <section class="reveal mt-16">
+      <h2 class="section-title">Languages</h2>
+      <ul class="mt-4 space-y-1">
+        {
+          bio.languages.map((lang) => (
+            <li>
+              <span class="font-semibold text-slate-900 dark:text-white">{lang.name}</span>
+              <span class="text-slate-500 dark:text-slate-400"> · {lang.level}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <footer class="mt-24 border-t border-slate-200 pt-8 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-500">
+      © {year} {bio.name}
+    </footer>
+  </main>
+</Layout>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      }
+    },
+    { rootMargin: "0px 0px -10% 0px" },
+  );
+
+  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+</script>
+
+<style>
+  @reference "../styles/global.css";
+
+  .section-title {
+    @apply flex items-center gap-3 text-sm font-semibold tracking-widest text-slate-400 uppercase dark:text-slate-500;
+  }
+
+  .section-title::after {
+    content: "";
+    @apply h-px flex-1 bg-gradient-to-r from-indigo-400/60 to-transparent;
+  }
+</style>
